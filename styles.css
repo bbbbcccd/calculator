@@ -11,7 +11,7 @@ h1 {
     flex-direction: column;
 }
 
-.result {
+#result {
     height: 5rem;
     line-height: 5rem;
     text-align: right;
@@ -28,7 +28,6 @@ button {
 
 .button-container {
     flex: 1;
-    border: 1px solid green;
     padding: 8px;
     display: flex;
     flex-direction: column;
@@ -36,30 +35,10 @@ button {
     gap: 8px; 
 }
 
-.first-row {
-    flex: 1;
-    display: flex;
-    justify-content: space-around;
-}
-
-.second-row {
-    flex: 1;
-    display: flex;
-    justify-content: space-around;
-}
-
-.third-row {
-    flex: 1;
-    display: flex;
-    justify-content: space-around;
-}
-
-.fourth-row {
-    flex: 1;
-    display: flex;
-    justify-content: space-around;
-}
-
+.first-row,
+.second-row,
+.third-row,
+.fourth-row,
 .fifth-row {
     flex: 1;
     display: flex;
