@@ -29,16 +29,16 @@ function divide(num1, num2) {
 
 function operate(operator, num1, num2) {
     switch (true) {
-        case (operator === '+'):
+        case (operator === 'add'):
             return add(num1, num2); 
         
-        case (operator === '-'):
+        case (operator === 'minus'):
             return subtract(num1, num2); 
         
-        case (operator === '*'):
+        case (operator === 'times'):
             return multiply(num1, num2); 
 
-        case (operator === '/'):
+        case (operator === 'divide'):
             return divide(num1, num2);   
     
         default: 
@@ -68,3 +68,5 @@ dot_button.addEventListener("click", (e) => {
         display_container.textContent += ".";
     }
 });
+
+
