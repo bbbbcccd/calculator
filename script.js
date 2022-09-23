@@ -83,8 +83,9 @@ clear_entry_button.addEventListener("click", () => {
     if (current_value === null && operator === null) {
         display_value = null;
         display_container.textContent = '';
-    } else if (display_value !== null && operator && current_value === null) {
+    } else if (display_value !== null && operator) {
         operator = null;
+        current_value = null;
     } else if (display_value === null && operator && current_value !== null) {
         // make operator btn active
         display_value = current_value;
