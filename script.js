@@ -95,3 +95,13 @@ clear_entry_button.addEventListener("click", () => {
         display_container.textContent = display_value;
     }
 });
+
+// When plus minus button is clicked, switch the signs of the display value
+// If display value is 0 or null, don't do anything
+// Else, switch signs of display value and reset the operator
+plus_minus_button.addEventListener("click", () => {
+    if (display_value) {
+        display_value = -display_value;
+        display_container.textContent = display_value;
+    }
+});
