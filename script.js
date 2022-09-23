@@ -79,20 +79,20 @@ all_clear_button.addEventListener("click", () => {
 });
 
 // When Clear Entry button is clicked, clear the most recent entry
-// Cases are:
-// When operator is null, reset the display_value to null and update display_container
-// When current_value is null and operator is active, reset the operator to null
-// When there is a current_value and operator is active, reset the operator to null and display current_value
 clear_entry_button.addEventListener("click", () => {
-    if (operator === null) {
+    if (current_value === null && operator === null) {
         display_value = null;
         display_container.textContent = '';
-    } else if (current_value === null) {
+    } else if (display_value !== null && operator && current_value === null) {
         operator = null;
-    } else {
+    } else if (display_value === null && operator && current_value !== null) {
+        // make operator btn active
         display_value = current_value;
+        display_container.textContent = current_value;
         current_value = null;
-        display_container.textContent = display_value;
+    } else if (display_value !== null && operator && current_value !== null) {
+        display_value = null;
+        display_container.textContent = '';
     }
 });
 
