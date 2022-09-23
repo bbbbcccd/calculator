@@ -106,3 +106,22 @@ plus_minus_button.addEventListener("click", () => {
         display_container.textContent = display_value;
     }
 });
+
+
+operator_buttons.forEach(btn => {
+    btn.addEventListener("click", e => {
+        if (current_value === null) {
+            operator = e.target.id;
+            // make operator btn active
+            current_value = display_value;
+        } else if (current_value !== null && display_value !== null) {
+            current_value = display_value = operate(operator, current_value, display_value);
+            display_container.textContent = display_value;
+            operator = e.target.id;
+            // make operator btn active
+        } else if (current_value !== null && display_value === null) {
+            operator = e.target.id;
+            // make operator btn active
+        }
+    });
+});
