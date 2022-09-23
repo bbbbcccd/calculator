@@ -2,6 +2,7 @@ const MAX_LENGTH = 12;
 const DEFAULT_VALUE = 0;
 let current_value = DEFAULT_VALUE;
 let display_value = DEFAULT_VALUE;
+let current_operator = null;
 const display_container = document.getElementById("result");
 const number_buttons = document.querySelectorAll(".number");
 const operator_buttons = document.querySelectorAll(".operator");
@@ -52,7 +53,7 @@ function operate(operator, num1, num2) {
 // Update the display_value variable 
 
 number_buttons.forEach(numNode => numNode.addEventListener("click", (e) => {
-    display_text = display_container.textContent + e.target.textContent;
+    let display_text = display_container.textContent + e.target.textContent;
     if (display_text.length <= MAX_LENGTH) {
         display_value = +display_text;
         display_container.textContent = display_text;
@@ -69,4 +70,12 @@ dot_button.addEventListener("click", (e) => {
     }
 });
 
+// When All Clear button is clicked, clear result container,
+// reset current_value and display value to DEFAULT_VALUE
+// reset current_operator to null
+all_clear_button.addEventListener("click", () => {
+    display_container.textContent = '';
+    current_value = display_value = 0;
+    current_operator = null;
+});
 
