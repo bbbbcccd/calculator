@@ -2,6 +2,7 @@ const MAX_LENGTH = 12;
 let current_value = null;
 let display_value = null;
 let operator = null;
+let last_entry = null;
 const display_container = document.getElementById("result");
 const number_buttons = document.querySelectorAll(".number");
 const operator_buttons = document.querySelectorAll(".operator");
@@ -52,6 +53,7 @@ function operate(operator, num1, num2) {
 // Update the display_value variable 
 
 number_buttons.forEach(numNode => numNode.addEventListener("click", (e) => {
+    last_entry = 'number';
     let display_text = display_container.textContent + e.target.textContent;
     if (display_text.length <= MAX_LENGTH) {
         display_value = +display_text;
@@ -76,6 +78,7 @@ all_clear_button.addEventListener("click", () => {
     display_container.textContent = '';
     current_value = display_value = null;
     operator = null;
+    last_entry = null;
 });
 
 // When Clear Entry button is clicked, clear the most recent entry
@@ -83,17 +86,21 @@ clear_entry_button.addEventListener("click", () => {
     if (current_value === null && operator === null) {
         display_value = null;
         display_container.textContent = '';
+        last_entry = null;
     } else if (display_value !== null && operator) {
         operator = null;
         current_value = null;
+        last_entry = 'number';
     } else if (display_value === null && operator && current_value !== null) {
         // make operator btn active
         display_value = current_value;
         display_container.textContent = current_value;
         current_value = null;
+        last_entry = 'operator';
     } else if (display_value !== null && operator && current_value !== null) {
         display_value = null;
         display_container.textContent = '';
+        last_entry = 'number';
     }
 });
 
@@ -104,6 +111,7 @@ plus_minus_button.addEventListener("click", () => {
     if (display_value) {
         display_value = -display_value;
         display_container.textContent = display_value;
+        last_entry = 'number';
     }
 });
 
@@ -114,14 +122,16 @@ operator_buttons.forEach(btn => {
             operator = e.target.id;
             // make operator btn active
             current_value = display_value;
-        } else if (current_value !== null && display_value !== null) {
+        } else if (current_value !== null && display_value !== null && last_entry === 'number') {
             current_value = display_value = operate(operator, current_value, display_value);
             display_container.textContent = display_value;
             operator = e.target.id;
             // make operator btn active
-        } else if (current_value !== null && display_value === null) {
+        } else if (last_entry === 'operator' || display_value === null) {
             operator = e.target.id;
             // make operator btn active
         }
+
+        last_entry = 'operator';
     });
 });
