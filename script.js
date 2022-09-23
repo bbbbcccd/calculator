@@ -53,12 +53,18 @@ function operate(operator, num1, num2) {
 // Update the display_value variable 
 
 number_buttons.forEach(numNode => numNode.addEventListener("click", (e) => {
-    last_entry = 'number';
+    if (last_entry === 'operator') {
+        display_value = null;
+        display_container.textContent = '';
+    }
+
     let display_text = display_container.textContent + e.target.textContent;
     if (display_text.length <= MAX_LENGTH) {
         display_value = +display_text;
         display_container.textContent = display_text;
     }
+    
+    last_entry = 'number';
 }));
 
 // When dot button is clicked, check if the display contains a dot
