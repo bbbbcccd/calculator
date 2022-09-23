@@ -1,8 +1,7 @@
 const MAX_LENGTH = 12;
-const DEFAULT_VALUE = 0;
-let current_value = DEFAULT_VALUE;
-let display_value = DEFAULT_VALUE;
-let current_operator = null;
+let current_value = null;
+let display_value = null;
+let operator = null;
 const display_container = document.getElementById("result");
 const number_buttons = document.querySelectorAll(".number");
 const operator_buttons = document.querySelectorAll(".operator");
@@ -71,11 +70,28 @@ dot_button.addEventListener("click", (e) => {
 });
 
 // When All Clear button is clicked, clear result container,
-// reset current_value and display value to DEFAULT_VALUE
-// reset current_operator to null
+// reset current_value and display value to null
+// reset operator to null
 all_clear_button.addEventListener("click", () => {
     display_container.textContent = '';
-    current_value = display_value = 0;
-    current_operator = null;
+    current_value = display_value = null;
+    operator = null;
 });
 
+// When Clear Entry button is clicked, clear the most recent entry
+// Cases are:
+// When operator is null, reset the display_value to null and update display_container
+// When current_value is null and operator is active, reset the operator to null
+// When there is a current_value and operator is active, reset the operator to null and display current_value
+clear_entry_button.addEventListener("click", () => {
+    if (operator === null) {
+        display_value = null;
+        display_container.textContent = '';
+    } else if (current_value === null) {
+        operator = null;
+    } else {
+        display_value = current_value;
+        current_value = null;
+        display_container.textContent = display_value;
+    }
+});
