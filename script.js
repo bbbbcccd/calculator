@@ -97,24 +97,27 @@ all_clear_button.addEventListener("click", () => {
 
 // When Clear Entry button is clicked, clear the most recent entry
 clear_entry_button.addEventListener("click", () => {
-    if (current_value === null && operator === null) {
-        display_value = null;
-        display_container.textContent = '';
-        last_entry = null;
-    } else if (display_value !== null && operator) {
-        operator = null;
-        current_value = null;
-        last_entry = 'number';
-    } else if (display_value === null && operator && current_value !== null) {
-        // make operator btn active
-        display_value = current_value;
-        display_container.textContent = current_value;
-        current_value = null;
-        last_entry = 'operator';
-    } else if (display_value !== null && operator && current_value !== null) {
-        display_value = null;
-        display_container.textContent = '';
-        last_entry = 'number';
+    if (last_entry === "number") {
+        if (current_value === null) {
+            display_value = null;
+            display_container.textContent = '';
+            last_entry = null;
+        } else {
+            display_value = null;
+            display_container.textContent = '';
+            last_entry = 'operator';
+        }
+    } else if (last_entry === "operator") {
+        if (display_value === null) {
+            // make operator btn active
+            display_value = current_value;
+            display_container.textContent = current_value;
+            last_entry = 'operator';
+        } else {
+            operator = null;
+            current_value = null;
+            last_entry = 'number';
+        }
     }
 });
 
