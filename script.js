@@ -1,4 +1,6 @@
 const MAX_LENGTH = 12;
+const MAX_VALUE = 10**12;
+const MIN_VALUE = -(10**11);
 let current_value = null;
 let display_value = null;
 let operator = null;
@@ -48,6 +50,13 @@ function operate(operator, num1, num2) {
     }
 }
 
+// Converts long decimal number to number with length 12 
+function round_to_max_length(num) {
+    let str_num = num.toString();
+    let str_whole_num = str_num.substring(0, str_num.indexOf(".") + 1);
+    return +num.toFixed(12 - str_whole_num.length); 
+}
+
 // When number button is clicked, evaluate the new display string
 // Check if it is longer than the max length
 // Update the display_value variable 
@@ -63,14 +72,13 @@ number_buttons.forEach(numNode => numNode.addEventListener("click", (e) => {
         display_value = +display_text;
         display_container.textContent = display_text;
     }
-    
+
     last_entry = 'number';
 }));
 
 // When dot button is clicked, check if the display contains a dot
 // Do not do anything if the display already contains a dot
 // Else, append a dot to the end of the display
-
 dot_button.addEventListener("click", (e) => {
     if (!display_container.textContent.includes(".")) {
         display_container.textContent += ".";
@@ -129,10 +137,19 @@ operator_buttons.forEach(btn => {
             // make operator btn active
             current_value = display_value;
         } else if (current_value !== null && display_value !== null && last_entry === 'number') {
-            current_value = display_value = operate(operator, current_value, display_value);
-            display_container.textContent = display_value;
-            operator = e.target.id;
-            // make operator btn active
+            calc_value = operate(operator, current_value, display_value);
+            if (calc_value >= MAX_VALUE || calc_value <= MIN_VALUE) {
+                all_clear_button.click();
+                display_container.textContent = "MATH ERROR";
+            } else {
+                if (calc_value.toString().length > MAX_LENGTH) {
+                    calc_value = round_to_max_length(calc_value);
+                }
+                display_value = current_value = calc_value;
+                display_container.textContent = display_value;
+                operator = e.target.id;
+                // make operator btn active
+            }
         } else if (last_entry === 'operator' || display_value === null) {
             operator = e.target.id;
             // make operator btn active
