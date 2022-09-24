@@ -161,3 +161,15 @@ operator_buttons.forEach(btn => {
         last_entry = 'operator';
     });
 });
+
+equals_button.addEventListener("click", () => {
+    if (current_value !== null && operator && display_value !== null) {
+        display_value = operate(operator, current_value, display_value);
+        display_container.textContent = display_value;
+        current_value = operator = null;
+    } else if (current_value !== null && operator) {
+        display_value = current_value;
+        display_container.textContent = display_value;
+        current_value = operator = null;
+    }
+});
