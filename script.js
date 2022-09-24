@@ -162,6 +162,16 @@ operator_buttons.forEach(btn => {
     });
 });
 
+window.addEventListener("click", () => {
+    operator_buttons.forEach(btn => {
+        if (operator === btn.id && last_entry === "operator") {
+            btn.classList.add("active");
+        } else {
+            btn.classList.remove("active");
+        }
+    })
+});
+
 equals_button.addEventListener("click", () => {
     if (current_value !== null && operator && display_value !== null) {
         display_value = operate(operator, current_value, display_value);
