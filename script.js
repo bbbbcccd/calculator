@@ -50,11 +50,26 @@ function operate(operator, num1, num2) {
     }
 }
 
+function displayMathError() {
+    all_clear_button.click();
+    display_container.textContent = "MATH ERROR";
+}
+
+// Check if number is between MIN_VALUE and MAX_VALUE
+function isWithinRange(num) {
+    return num >= MIN_VALUE && num <= MAX_VALUE;
+}
+
 // Converts long decimal number to number with length 12 
 function round_to_max_length(num) {
     let str_num = num.toString();
-    let str_whole_num = str_num.substring(0, str_num.indexOf(".") + 1);
-    return +num.toFixed(12 - str_whole_num.length); 
+    console.log(str_num.length);
+    if (str_num.length > MAX_LENGTH) {
+        let str_whole_num = str_num.substring(0, str_num.indexOf(".") + 1);
+        return +num.toFixed(12 - str_whole_num.length); 
+    } else {
+        return num;
+    }
 }
 
 // When number button is clicked, evaluate the new display string
@@ -141,13 +156,10 @@ operator_buttons.forEach(btn => {
             current_value = display_value;
         } else if (current_value !== null && display_value !== null && last_entry === 'number') {
             calc_value = operate(operator, current_value, display_value);
-            if (calc_value >= MAX_VALUE || calc_value <= MIN_VALUE) {
-                all_clear_button.click();
-                display_container.textContent = "MATH ERROR";
+            if (!isWithinRange(calc_value)) {
+               displayMathError();
             } else {
-                if (calc_value.toString().length > MAX_LENGTH) {
-                    calc_value = round_to_max_length(calc_value);
-                }
+                calc_value = round_to_max_length(calc_value);
                 display_value = current_value = calc_value;
                 display_container.textContent = display_value;
                 operator = e.target.id;
