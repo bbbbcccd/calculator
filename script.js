@@ -186,9 +186,14 @@ window.addEventListener("click", () => {
 
 equals_button.addEventListener("click", () => {
     if (current_value !== null && operator && display_value !== null) {
-        display_value = operate(operator, current_value, display_value);
-        display_container.textContent = display_value;
-        current_value = operator = null;
+        calc_value = operate(operator, current_value, display_value);
+        if (!isWithinRange(calc_value)) {
+            displayMathError();
+        } else {
+            display_value = round_to_max_length(calc_value);
+            display_container.textContent = display_value;
+            current_value = operator = null;
+        }
     } else if (current_value !== null && operator) {
         display_value = current_value;
         display_container.textContent = display_value;
